@@ -1,0 +1,242 @@
+/* Nguyễn Thanh Phúc - B2203464 */
+/*---------------------- HEADER ----------------------*/
+.main-top {
+    background: #000000;
+    color: #ffffff;
+    position: relative;
+    max-height: 100px;
+}
+
+
+.main-header {
+    position: sticky; /* Hoặc fixed nếu muốn cố định */
+    top: 0;
+    left: 0;
+    z-index: 10;
+    background-color: rgba(255, 255, 255, 0.9); /* Nền mờ */
+    backdrop-filter: blur(5px);
+    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.main-header.scrolled {
+    background-color: #a4e7b3; /* Màu nền đặc khi cuộn */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Bóng đậm hơn */
+}
+
+.custom-select-box {
+    float: left;
+    width: 95px;
+    margin-right: 10px;
+}
+
+.custom-select-box .form-control {
+    background: none;
+    border: none;
+}
+
+.custom-select-box .btn {
+    padding: 4px;
+    font-size: 14px;
+    background: #22b472;
+    color: #fff;
+    border: none;
+    border-radius: 0;
+}
+
+.custom-select-box .dropdown-toggle::after {
+    display: inline-block;
+    content: "";
+    border-top: .3em solid;
+    border-right: .3em solid transparent;
+    position: absolute;
+    top: 13px;
+    right: 10px;
+}
+
+/* Nút gọi cho chúng tôi */
+.right-phone-box {
+    float: left;
+    margin-right: 10px;
+}
+
+.right-phone-box p {
+    margin: 0;
+    color: #ffffff;
+    font-size: 14px;
+    line-height: 30px;
+}
+
+.right-phone-box p a {
+    color: #ffffff;
+}
+
+.right-phone-box p a:hover {
+    color: #2ba46a;
+}
+
+/* Chữ nhấp nháy ở giữa header */
+.offer-box, .slide {
+    color: #FFFFFF;
+    font-size: 13px;
+    padding: 2px 15px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+}
+
+/* Links bên cạnh nút gọi cho chúng tôi */
+.our-link {
+    float: left;
+}
+
+.our-link ul li {
+    display: inline-block;
+    /* border-right: 1px solid #ffffff; */
+    padding: 0 10px;
+    line-height: 14px;
+}
+
+.our-link ul li a {
+    color: #ffffff;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+.our-link ul li a:hover {
+    color: #35b47f;
+}
+
+.our-link ul li:last-child {
+    border: none;
+}
+
+/* Button Login bên phải */
+/* Tinh chỉnh cho nút dropdown Login */
+.login-box {
+    float: right;
+    margin-left: 20px;
+}
+
+.login-box .dropdown-toggle {
+    padding: 8px 12px;
+    font-size: 14px;
+    background: #35b47b;
+    color: #fff;
+    border: none;
+    border-radius: 4px; /* Tăng góc bo nhẹ để nút đẹp hơn */
+    cursor: pointer;
+}
+
+.login-box .dropdown-toggle:hover {
+    background: #2d9b68; /* Màu nền khi hover */
+}
+
+.login-box .dropdown-menu {
+    min-width: 120px;
+    text-align: center; /* Căn giữa các mục */
+}
+
+.login-box .dropdown-menu a {
+    color: #000;
+    padding: 8px 12px;
+    display: block;
+    text-decoration: none;
+    transition: background 0.3s ease;
+}
+
+.login-box .dropdown-menu a:hover {
+    background: #f1f1f1; /* Màu nền khi hover */
+    color: #000;
+}
+
+/* Navbar và nội dung bên trong */
+nav.navbar {
+    font-weight: 700;
+    font-size: 16px;
+    text-transform: uppercase;
+    background-color: transparent;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Hiệu ứng mượt cho navbar */
+/* Thanh điều hướng mặc định */
+.sticky-header .navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: rgba(255, 255, 255, 0.9); /* Màu nền nhẹ */
+    box-shadow: none; /* Không có bóng đổ */
+    opacity: 1; /* Hiển thị rõ */
+    transition: background-color 1s ease, box-shadow 0.8s ease; /* Hiệu ứng mượt */
+}
+
+/* Khi cuộn xuống */
+.sticky-header .navbar.scrolled {
+    transform: translateY(0);
+    background-color: rgba(255, 255, 255, 1); /* Màu nền đậm hơn */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Thêm bóng đổ */
+}
+.sticky-header .navbar {
+    opacity: 1;
+    transition: opacity 1s ease, background-color 0.8s ease, box-shadow 0.4s ease;
+}
+
+.sticky-header .navbar.scrolled {
+    opacity: 0.95; /* Hiệu ứng mờ nhẹ khi cuộn */
+    transform: translateY(0);
+}
+
+nav.navbar ul.nav > li > a {
+    color: #000000;
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+}
+
+nav.navbar ul.nav > li > a:hover {
+    color: #35b46a;
+}
+
+/* Điều chỉnh chiều cao của carousel để phù hợp */
+.text-slid-box .carousel-inner {
+    height: 30px; /* Giảm chiều cao của carousel */
+}
+
+/* Đảm bảo rằng các link trong our-link không quá rộng */
+.our-link ul {
+    padding-left: 10px;
+    margin-bottom: 0;
+}
+
+/* Đảm bảo rằng carousel không chiếm quá nhiều không gian */
+.carousel-item {
+    font-size: 12px; /* Thu nhỏ font trong carousel */
+    padding: 5px 0; /* Giảm padding trong các item carousel */
+}
+
+/* --------------------------- */
+.nav-item .dropdown-menu {
+    max-height: none; /* Đảm bảo không giới hạn chiều cao */
+}
+
+
+/* ----------------------------------- */
+/* Điều chỉnh kích thước của các dropdown */
+.dropdown-menu {
+    max-height: none; /* Giới hạn chiều cao dropdown */
+    overflow-y: auto;  /* Cho phép cuộn nếu nội dung quá dài */
+}
+/* Hiệu ứng hover */
+.dropdown-item:hover {
+    background-color: #28a745;
+    color: white;
+}
+
+.dropdown-menu.show {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 0.3s ease-in-out;
+}
+
+

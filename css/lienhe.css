@@ -1,0 +1,176 @@
+/* Nguyễn Lê Huỳnh Đào - B2305564 */
+/* ----------------------------------------LIÊN HỆ----------------------------- */
+.contact-form-right {
+    position: relative; /* Đảm bảo relative để khoảng cách dưới được áp dụng */
+    margin-top: 100px; /* Khoảng cách đủ lớn để tránh navbar */
+    padding: 20px; /* Khoảng cách nội bộ */
+    z-index: 1; /* Đảm bảo nó hiển thị trên nền, nhưng không đè lên navbar */
+    background-color: #ffffff; /* Màu nền nếu cần để nổi bật */
+    border-radius: 8px; /* Góc bo tròn cho đẹp */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Thêm bóng để tách biệt nội dung */
+}
+
+/* NHẬN THÔNG TIN KHUYẾN MÃI */
+/* Định dạng phần tiêu đề trong phần đăng ký */
+.subscribe-section h2 {
+    font-size: 50px; /* Kích thước chữ lớn cho tiêu đề */
+    color: #333; /* Màu chữ đậm dễ đọc */
+    margin-bottom: 10px; /* Khoảng cách giữa tiêu đề và phần nội dung bên dưới */
+}
+
+/* Định dạng cho các đoạn văn bản giải thích */
+.subscribe-section p {
+    font-size: 14px; /* Kích thước chữ vừa phải */
+    color: #555; /* Màu chữ trung tính cho phần giải thích */
+    margin-bottom: 15px; /* Khoảng cách dưới đoạn văn bản */
+}
+
+/* Định dạng cho ô nhập số điện thoại */
+.subscribe-section input {
+    width: 80%; /* Chiều rộng 80% so với phần tử chứa, giúp ô nhập không quá rộng */
+    padding: 10px; /* Khoảng cách giữa nội dung ô nhập và viền */
+    font-size: 14px; /* Kích thước chữ trong ô nhập */
+    border: 1px solid #ccc; /* Viền nhẹ cho ô nhập */
+    border-radius: 5px; /* Bo góc nhẹ cho ô nhập */
+    margin-bottom: 10px; /* Khoảng cách dưới ô nhập */
+    box-sizing: border-box; /* Bao gồm padding và border vào chiều rộng của ô nhập */
+    transition: border-color 0.3s ease; /* Thêm hiệu ứng khi thay đổi màu viền */
+}
+
+/* Thay đổi màu viền khi ô nhập được focus */
+.subscribe-section input:focus {
+    border-color: #28a745; /* Viền xanh lá khi người dùng click vào ô nhập */
+    outline: none; /* Xóa viền mặc định khi focus */
+}
+
+/* Định dạng cho nút đăng ký */
+.subscribe-section button {
+    background-color: #28a745; /* Màu nền nút là xanh lá */
+    color: #fff; /* Màu chữ là trắng */
+    font-size: 14px; /* Kích thước chữ trong nút */
+    padding: 10px 20px; /* Khoảng cách trong nút (ngang và dọc) */
+    border: none; /* Bỏ viền mặc định của nút */
+    border-radius: 5px; /* Bo góc mềm mại cho nút */
+    cursor: pointer; /* Thay đổi con trỏ thành hình bàn tay khi hover */
+    transition: background-color 0.3s ease; /* Thêm hiệu ứng khi hover vào nút */
+}
+
+/* Màu nền của nút khi hover */
+.subscribe-section button:hover {
+    background-color: #218838; /* Màu xanh lá đậm hơn khi hover */
+}
+
+/* Định dạng cho thông báo lỗi khi số điện thoại không hợp lệ */
+#error-message {
+    font-size: 15px; /* Kích thước chữ nhỏ */
+    color: #dc3545; /* Màu chữ đỏ cho thông báo lỗi */
+    margin-top: 10px; /* Khoảng cách trên của thông báo lỗi */
+    display: none; /* Ẩn thông báo lỗi mặc định */
+}
+
+/* Hiển thị thông báo lỗi khi có lỗi */
+.error-message.active {
+    display: block; /* Hiển thị thông báo lỗi khi có lớp 'active' */
+}
+
+/* Định dạng màu sắc cho số điện thoại */
+.contact-info .phone {
+    color: #ff8c00;
+}
+/* Định dạng màu sắc cho email và địa chỉ */
+.contact-info .email, .contact-info .address {
+    color: #008000;
+}
+
+/* LIÊN HỆ VỚI CHÚNG TÔI*/
+.contact-info-left {
+    position: relative; /* Đảm bảo vị trí tương đối */
+    margin-top: 100px; /* Đảm bảo nằm bên dưới navbar */
+    padding: 20px; /* Khoảng cách nội bộ */
+    z-index: 1; /* Hiển thị đúng thứ tự */
+    background-color: #f0f0f0; /* Màu nền nhạt */
+    border-radius: 8px; /* Góc bo tròn */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng */
+}
+
+.contact-info-left h2 {
+    font-size: 23px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333; /* Màu chữ nổi bật */
+}
+
+.contact-info-left p {
+    font-size: 20px;
+    color: black; /* Màu chữ nhạt hơn để dễ đọc */
+    line-height: 1.8; /* Tăng khoảng cách dòng */
+}
+
+.contact-info-left ul {
+    list-style: none; /* Bỏ ký hiệu đầu dòng */
+    padding: 0;
+    margin: 0;
+}
+
+.contact-info-left ul li {
+    margin-bottom: 15px; /* Khoảng cách giữa các mục */
+    font-size: 20px;
+    color: black;
+}
+
+.contact-info-left ul li i {
+    color: #28a745; /* Màu biểu tượng */
+    margin-right: 10px; /* Khoảng cách giữa biểu tượng và nội dung */
+    font-size: 20px; /* Tăng kích thước biểu tượng */
+}
+
+.contact-info-left ul li a {
+    text-decoration: none;
+    color: #007bff; /* Màu link */
+    font-weight: bold;
+}
+
+.contact-info-left ul li a:hover {
+    text-decoration: underline;
+    color: #0056b3; /* Màu đậm hơn khi hover */
+}
+
+.form-label {
+    font-weight: bold;  
+    font-size: large; 
+}
+
+/* Ba biểu tượng  */
+    /* Định dạng chung cho link icon */
+    .icon-link {
+        display: inline-block;
+        animation: flicker 1.5s infinite, pulse 2s infinite; /* Hiệu ứng chớp và phóng to */
+        margin: 5px; /* Khoảng cách giữa các icon */
+    }
+
+    /* Định dạng chung cho icon */
+    .icon {
+        width: 50px; /* Kích thước chiều rộng icon */
+        height: 50px; /* Kích thước chiều cao icon */
+        object-fit: cover; /* Đảm bảo hình ảnh không bị méo */
+    }
+
+    /* Keyframes cho hiệu ứng chớp */
+    @keyframes flicker {
+        0%, 100% {
+            opacity: 1; /* Hiển thị đầy đủ */
+        }
+        50% {
+            opacity: 0.5; /* Mờ đi */
+        }
+    }
+
+    /* Keyframes cho hiệu ứng phóng to */
+    @keyframes pulse {
+        0%, 100% {
+            transform: scale(1); /* Kích thước ban đầu */
+        }
+        50% {
+            transform: scale(1.2); /* Phóng to lên 20% */
+        }
+    }

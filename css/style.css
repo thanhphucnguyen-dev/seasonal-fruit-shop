@@ -1,0 +1,733 @@
+/* Nguyễn Thanh Phúc - B2203464 */
+@import url(footer.css);
+@import url(blog.css);
+@import url(header.css);
+@import url(customer.css);
+@import url(bootsnav.css);
+@import url(responsive.css);
+@import url(all.min.css);
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800&subset=vietnamese&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Dosis:200,300,400,500,600,700&subset=vietnamese&display=swap');
+
+/* Lớp chứa ảnh nền */
+.background-container {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* Chiều cao toàn màn hình */
+  background-image: url('images/background.jpg');  /* Đường dẫn ảnh nền */
+  background-size: cover;
+  background-position: center;
+}
+
+
+/* Lớp phủ mờ */
+.background-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);  /* Lớp phủ tối */
+  filter: blur(6px);  /* Mờ nền */
+  z-index: 0;
+}
+
+
+body {
+  color: #666666;
+  font-size: 15px;
+  font-family: 'Dosis', sans-serif;
+  line-height: 1.80857;
+}
+a {
+  color: #1f1f1f;
+  text-decoration: none !important;
+  outline: none !important;
+  -webkit-transition: all .3s ease-in-out;
+  -moz-transition: all .3s ease-in-out;
+  -ms-transition: all .3s ease-in-out;
+  -o-transition: all .3s ease-in-out;
+  transition: all .3s ease-in-out;
+}
+h1, h2, h3, h4, h5, h6 {
+  letter-spacing: 0;
+  font-weight: normal;
+  position: relative;
+  padding: 0 0 10px 0;
+  font-weight: normal;
+  line-height: 120% !important;
+  color: #1f1f1f;
+  margin: 0 
+}
+h1 {
+ font-size: 60px;
+ color: whitesmoke;
+ font-weight: 455;
+}
+h2 {font-size: 22px;}
+h3 {font-size: 18px;}
+h4 {font-size: 16px;}
+h5 {font-size: 14px;}
+h6 {font-size: 13px;}
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+  color: #212121;
+  text-decoration: none!important;
+  opacity: 1 
+}
+h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover {opacity: .8}
+a {
+  color: #1f1f1f;
+  text-decoration: none;
+  outline: none;
+}
+a, .btn {
+  text-decoration: none !important;
+  outline: none !important;
+  -webkit-transition: all .3s ease-in-out;
+  -moz-transition: all .3s ease-in-out;
+  -ms-transition: all .3s ease-in-out;
+  -o-transition: all .3s ease-in-out;
+  transition: all .3s ease-in-out;
+}
+.btn-custom {
+  margin-top: 20px;
+  background-color: transparent !important;
+  border: 2px solid #ddd;
+  padding: 12px 40px;
+  font-size: 16px;
+}
+.lead {
+  font-size: 18px;
+  line-height: 30px;
+  color: #767676;
+  margin: 0;
+  padding: 0;
+}
+blockquote {
+  margin: 20px 0 20px;
+  padding: 30px;
+}
+button:focus{
+  outline: none;
+  box-shadow: none;
+}
+:focus {
+  outline: 0;
+}
+p{
+  margin: 0px;
+}
+.bootstrap-select .dropdown-toggle:focus{
+  outline: none !important;
+}
+.form-control::-moz-placeholder {
+  color: #ffffff;
+  opacity: 1;
+}
+.bootstrap-select .dropdown-toggle:focus{
+  box-shadow: none !important 
+}
+
+/* nút tìm kiếm */
+/* Search Icon */
+.nav-link {
+  font-size: 20px;
+  cursor: pointer;
+  text-decoration: none;
+  color: #333;
+  padding: 10px;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #0b8a27;
+}
+
+/* Search Container */
+.search-container {
+  display: none; /* Hidden by default */
+  position: absolute;
+  top: 90px; /* Adjust based on header height */
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.9); /* Dark background with transparency */
+  padding: 20px 10%;
+  z-index: 999;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Search Box */
+.search-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.search-box input {
+  flex: 1;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.search-box input:focus {
+  border-color: #0b8a27;
+  box-shadow: 0 0 5px rgba(11, 138, 39, 0.5);
+}
+
+/* Close Button */
+.search-box .close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #fff;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: color 0.3s ease;
+}
+
+.search-box .close-btn:hover {
+  color: #c00;
+}
+
+/* Responsive: Make Search Full Width on Mobile */
+@media (max-width: 768px) {
+  .search-box input {
+    width: 100%;
+  }
+  .search-container {
+    padding: 10px 5%;
+  }
+}
+
+
+/* Chatbox styles-------------------------------- */
+/* Biểu tượng chat */
+#chat-icon {
+  font-size: 25px;
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  background-color: #4CAF50;
+  color: white;
+  border-radius: 50%;
+  padding: 10px;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.5s ease;
+}
+
+#chat-icon:hover {
+  background-color: #45a049; /* Đổi màu nền khi hover */
+  transform: scale(1.1); /* Phóng to biểu tượng */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Tăng độ đổ bóng */
+}
+
+#chat-icon:active {
+  transform: scale(0.95); /* Thu nhỏ biểu tượng khi nhấn */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); /* Giảm độ đổ bóng */
+}
+
+/* Hộp chat */
+#chatbox {
+  width: 350px; /* Tăng chiều rộng của hộp chat */
+  height: 400px; /* Tăng chiều cao của hộp chat */
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+/* Tiêu đề hộp chat */
+#chatbox-header {
+  background-color: #50970e;
+  color: white;
+  padding: 10px;
+  font-size: 18px;
+  text-align: center;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+/* Thân hộp chat (vùng hiển thị tin nhắn) */
+#chatbox-body {
+  padding: 10px;
+  flex-grow: 1; /* Cho phép phần thân chat mở rộng */
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+/* Khung tin nhắn */
+#chat-log {
+  margin-bottom: 10px;
+}
+
+/* Khung nhập liệu và nút gửi cùng trên một hàng */
+#chat-input-container {
+  display: flex;
+  align-items: center; /* Căn chỉnh theo chiều dọc */
+  margin-top: 10px;
+}
+
+#user-input {
+  width: calc(100% - 70px); /* Ô nhập liệu chiếm phần còn lại */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#send-btn {
+  width: 60px; /* Kích thước nút gửi */
+  padding: 10px;
+  background-color: #c3c7f4;
+  color: #073a4b;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px; /* Khoảng cách giữa ô nhập liệu và nút gửi */
+}
+
+/* Tin nhắn của người dùng */
+.user {
+  text-align: right;
+  background-color: #E7F5DC; /* Màu nền cho tin nhắn người dùng */
+  padding: 8px;
+  border-radius: 5px;
+  margin: 5px 0;
+  max-width: 70%;
+  margin-left: auto;
+  color: #213a58;
+}
+
+/* Tin nhắn của bot */
+.bot {
+  text-align: left;
+  background-color: #C3C7F4; /* Màu nền cho tin nhắn bot */
+  padding: 8px;
+  border-radius: 5px;
+  margin: 5px 0;
+  max-width: 70%;
+  margin-right: auto;
+  color: #123197;
+}
+
+/* Nút đóng trong header */
+#close-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+  position: absolute;
+  top: 5px;
+  right: 20px;
+  cursor: pointer;
+}
+
+#close-btn:hover {
+  color: #ff0000; /* Đổi màu khi hover */
+}
+
+/* -----------------------------------------------THANH TOÁN -------------------------------------- */
+.my-account-box-main {
+  /* padding-top: 150px; */
+  background-color: #f9f9f9;
+}
+
+.service-box {
+  text-align: center;
+}
+
+.service-icon a {
+  font-size: 40px;
+  color: #4CAF50;
+  margin-bottom: 10px;
+  display: inline-block;
+  transition: color 0.3s ease;
+}
+
+.service-icon a:hover {
+  color: #388e3c;
+}
+
+.service-desc h4 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.service-desc p {
+  font-size: 14px;
+  color: #666;
+}
+
+.card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.logout-box .btn {
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px 20px;
+}
+
+ul {
+  padding: 0;
+}
+
+ul li {
+  padding: 5px 0;
+}
+
+ul li a {
+  transition: color 0.3s ease;
+}
+
+ul li a:hover {
+  color: #388e3c;
+}
+
+/*Form thanh toán */
+/* Tạo không gian giữa các phần tử trong một hàng */
+.row {
+  margin-bottom: 40px;
+}
+
+/* Căn chỉnh các phần thanh toán và giỏ hàng */
+.form-section, .cart-container {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Điều chỉnh các phần của giỏ hàng */
+.cart-container {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+/* Căn chỉnh các form inputs */
+form div {
+  margin-bottom: 15px;
+}
+
+form input, form select, form textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 20px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  transition: border-color 0.3s;
+}
+
+form input:focus, form select:focus, form textarea:focus {
+  border-color: #0056b3;
+  outline: none;
+}
+
+/* Các nút bấm */
+button {
+  padding: 10px 20px;
+  font-size: 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Các phần giỏ hàng */
+.cart-details {
+  margin-bottom: 20px;
+}
+
+.cart-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+}
+
+.cart-row img {
+  max-width: 50px;
+  margin-right: 15px;
+}
+
+.cart-row .quantity-controls {
+  display: flex;
+  align-items: center;
+}
+
+.cart-row .quantity-controls button {
+  background-color: #f0f0f0;
+  color: #333;
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+
+.cart-row .quantity-controls button:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.cart-row .remove-item {
+  background-color: #ff0000;
+  color: white;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.cart-row .remove-item:hover {
+  background-color: #cc0000;
+}
+
+/* Phần tổng tiền */
+.cart-total {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  margin-top: 20px;
+}
+
+.discount-amount {
+  margin-top: 10px;
+}
+
+/* Mã giảm giá */
+.discount-code input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-bottom: 15px;
+}
+
+/* Các nút thao tác với mã giảm giá */
+.discount-buttons button {
+  margin-right: 10px;
+  padding: 8px 15px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+.discount-buttons button:hover {
+  background-color: #218838;
+}
+
+.feedback {
+  color: #e74c3c;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+/* Responsive cho các màn hình nhỏ */
+@media (max-width: 768px) {
+  .container {
+      padding: 20px;
+  }
+
+  .row {
+      flex-direction: column;
+  }
+
+  .col-md-6 {
+      width: 100%;
+      margin-bottom: 20px;
+  }
+
+  .cart-details {
+      margin-top: 20px;
+  }
+}
+
+/* -----------------------------------------------THANH TOÁN THÀNH CÔNG-------------------------------------- */
+.success {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px 40px;
+  text-align: center;
+  max-width:  6600px;
+  width: 100%;
+}
+.icon {
+  font-size: 60px;
+  color: #ffffff;
+  background-color: #4caf50;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+.icon i {
+  font-size: 40px;
+}
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 20px 0 10px;
+}
+.message {
+  font-size: 16px;
+  color: #666666;
+  margin-bottom: 20px;
+}
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+.button {
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: none;
+}
+.button:hover {
+  background-color: #0056b3;
+}
+
+/* -------------------------------------Title-box--------------------------- */
+/* Style chính cho phần title box */
+.all-title-box {
+  background: url("../images/all-bg-title.jpg") no-repeat center center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -ms-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  text-align: center;
+  background-attachment: fixed;
+  padding: 150px 0px;
+  position: relative;
+  margin-top: 110px;
+  z-index: 1;
+}
+.all-title-box::before {
+  background: rgba(0, 0, 0, 0.6);
+  content: "";
+  position: absolute;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  left: 0px;
+  top: 0px;
+}
+.all-title-box h2 {
+  font-size: 48px;
+  font-weight: 900;
+  color: #ffffff;
+  float: left;
+  margin-left: 120px;
+  margin-top: 20px;
+  padding: 10px 0px;
+}
+
+/* Breadcrumb styling */
+.all-title-box .breadcrumb {
+  background: rgba(255, 240, 245, 0.8);
+  margin: 0x;
+  margin-left: auto;
+  display: inline-flex;
+  border-radius: 5px;
+  font-size: 28px; /* Tăng kích thước chữ */
+  padding: 10px 20px; /*Tăng khoảng cách trong breadcrumb*/
+  text-align: center; /* Canh phải */
+  float: right; /* Đẩy breadcrumb sang bên phải */
+  position: relative;
+  font-weight: 500;
+  max-height: 100px;
+}
+
+.all-title-box .breadcrumb li {
+  display: inline-block;
+  color: #fcf5f5;
+  font-size: 20px; /* Tăng kích thước chữ */
+  margin-right: 15px;
+}
+
+.all-title-box .breadcrumb li a {
+  color: #111111;
+  font-size: 24px; /* Tăng kích thước chữ */
+  text-decoration: none; /* Bỏ gạch chân */
+  transition: color 0.3s ease;
+  font-weight: 600;
+}
+
+/* Đổi màu khi hover */
+.all-title-box .breadcrumb li a:hover {
+  color: #12a30a; /* Màu chữ khi hover */
+  font-size: 26px;
+  font-weight: 700;
+  padding: 12px 22px;
+  border-radius: 5px;
+}
+
+/* Đổi màu khi nhấp (active) */
+.all-title-box .breadcrumb li a:active {
+  color: #0066cc; /* Màu chữ khi nhấp */
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.all-title-box .breadcrumb-item + .breadcrumb-item::before {
+  color: #000000;
+}
+
+/* Responsive chỉnh sửa cho các thiết bị nhỏ hơn */
+@media (max-width: 768px) {
+  .all-title-box h2 {
+    font-size: 22px;
+  }
+  .all-title-box .breadcrumb {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+}
+
+/* Các sản phẩm trên  trang chủ---------------------- */
+

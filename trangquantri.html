@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop Admin Dashboard</title>
+    <link rel="stylesheet" href="css/quantri.css">
+    
+    <script src="js/quantri.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <header class="header">
+        <div class="brand">
+            <h1>Fruit Shop Admin</h1>
+        </div>
+    </header>
+    <div class="banner">
+        <img src="Green Colorful Illustrative Fruit Store Promotion Banner (1).png" alt="Banner Image"
+            class="banner-image">
+    </div>
+    <div class="container">
+        <div class="sidebar">
+            <h2>Danh Mục</h2>
+            <ul>
+                <li class="dropdown">
+                    <h3><a href="#" onclick="toggleMenu('productMenu', event)">Sản Phẩm</a></h3>
+                    <ul id="productMenu" class="submenu" style="display: none;">
+                        <li>
+                            <h5><a href="#" onclick="showAddProductSection(event)">Thêm sản phẩm</a></h5>
+                        </li>
+                        <li>
+                            <h5><a href="#" onclick="showDeleteProductSection(event)">Xóa sản phẩm</a></h5>
+                        </li>
+                        <li>
+                            <h5><a href="#" onclick="showEditProductSection(event)">Sửa sản phẩm</a></h5>
+                        </li>
+                        <li>
+                            <h5><a href="#" onclick="showProductList(event)">Danh sách sản phẩm</a></h5>
+                        </li>
+                    </ul>
+                </li>
+                <div class="dropdown">
+                    <h3><a href="#" onclick="toggleVisibility('orderMenu')">Đơn hàng</a></h3>
+                    <ul id="orderMenu" class="submenu" style="display: none;">
+                        <li>
+                            <h5><a href="#" onclick="showCreateOrder()">Tạo đơn hàng</a></h5>
+                        </li>
+                        <li>
+                            <h5><a href="#" onclick="showPendingOrders()">Chờ duyệt</a></h5>
+                        </li>
+                        <li>
+                            <h5><a href="#" onclick="showApprovedOrders()">Đã duyệt</a></h5>
+                        </li>
+                    </ul>
+                </div>
+            </ul>
+        </div>
+
+        <div class="content">
+            <div id="productListSection" class="product-list" style="display: none;">
+                <h2>Danh sách sản phẩm</h2>
+                <h3><input type="text" id="searchInput" placeholder="Tìm kiếm sản phẩm theo tên hoặc ID..." /></h3>
+                <div id="noResultsMessage" style="display: none;">Không tìm thấy sản phẩm nào phù hợp.</div>
+                <table class="product-table">
+                    <thead>
+                        <tr>
+
+                            <th>ID</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Giá tiền</th>
+                            <th>Số lượng</th>
+                            <th>Hình ảnh</th>
+                            <th>Mô tả <button class="close-button" onclick="hideProductList()">X</button></th>
+                        </tr>
+                    </thead>
+                    <tbody id="productTableBody">
+                    </tbody>
+                </table>
+            </div>
+            <button type="button" onclick="showCreateOrderSection()">Tạo đơn hàng</button>
+            <div id="createOrderSection" class="create-order" style="display: none;">
+                <h2>Tạo đơn hàng</h2>
+                <form id="orderForm" onsubmit="return false;">
+                    <h3>Thông tin khách hàng</h3>
+                    <input id="customerName" type="text" placeholder="Tên khách hàng" />
+                    <input id="customerPhone" type="text" placeholder="Số điện thoại" />
+                    <input id="customerAddress" type="text" placeholder="Địa chỉ" />
+                    <button onclick="saveOrder()">Lưu đơn hàng</button>
+                    <h3>Thông tin sản phẩm</h3>
+                    <input id="productId" type="text" placeholder="Nhập ID sản phẩm" />
+                    <input id="productQuantity" type="number" placeholder="Số lượng" min="1" />
+                    <button onclick="addProductToOrder()">Thêm vào đơn hàng</button>
+                </form>
+                <table id="orderTable" class="order-table">
+                    <thead>
+                        <tr>
+                            <th>ID Sản phẩm</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Số lượng</th>
+                            <th>Giá tiền</th>
+                            <th>Tổng</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orderTableBody"></tbody>
+                </table>
+
+                <p>Tổng cộng: <span id="totalAmount">0</span></p>
+                <button type="button" onclick="saveOrder()">Lưu đơn hàng</button>
+            </div>
+            <div id="successMessage" style="display: none; color: green; font-weight: bold;">
+                Đơn hàng đã được tạo thành công!
+            </div>
+            <div id="pendingOrdersSection" class="orders-section" style="display: none;">
+                <h2>Đơn hàng chờ duyệt</h2>
+                <button onclick="showPendingOrders()">Xem Đơn Hàng Chờ Duyệt</button>
+                <table id="pendingOrdersTable" class="orders-table">
+                    <thead>
+                        <tr>
+                            <th>ID Đơn hàng</th>
+                            <th>Thông tin khách hàng</th>
+                            <th>Tổng tiền</th>
+                            <td><button onclick="approveOrder(this)">Duyệt</button></td>
+                        </tr>
+                    </thead>
+                    <tbody id="pendingOrdersTableBody"></tbody>
+                </table>
+            </div>
+
+            <div id="approvedOrdersSection" style="display:none;">
+                <h3>Danh sách đơn hàng đã duyệt</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Thông tin khách hàng</th>
+                            <th>Sản phẩm</th>
+                            <th>Tổng tiền</th>
+                            <th>Thêm</th>
+                        </tr>
+                    </thead>
+                    <tbody id="approvedOrdersTableBody">
+                    </tbody>
+                </table>
+            </div>
+            <div id="invoiceForm" class="invoice-form" style="display:none;">
+                <h3 class="invoice-title">Hóa Đơn</h3>
+                <div class="invoice-section">
+                    <h4>Thông tin khách hàng</h4>
+                    <p><strong>Tên khách hàng:</strong> <span id="customerNameInvoice"></span></p>
+                    <p><strong>Số điện thoại:</strong> <span id="customerPhoneInvoice"></span></p>
+                    <p><strong>Địa chỉ:</strong> <span id="customerAddressInvoice"></span></p>
+                </div>
+                <div class="invoice-section">
+                    <h4>Sản phẩm</h4>
+                    <ul id="productList"></ul>
+                </div>
+                <div class="invoice-section">
+                    <p><strong>Tổng tiền:</strong> <span id="totalAmountInvoice"></span> VND</p>
+                </div>
+                <button onclick="hideInvoiceForm()" class="btn-close">Đóng</button>
+            </div>
+            <div id="overlay" class="overlay" onclick="hideInvoiceForm()"></div>
+        </div>
+    </div>
+    <div id="overlay" class="overlay" style="display: none;"></div>
+    <div id="deleteProductSection" class="product-form" style="display: none;">
+        <button class="close-button" onclick="hideProductManagement()">X</button>
+        <input type="text" id="deleteProductId" placeholder="Nhập ID sản phẩm để xóa">
+        <button onclick="deleteProduct()">Xóa sản phẩm</button>
+    </div>
+    <div id="addProductSection" class="add-product" style="display: none;">
+        <div class="form-header">
+            <button class="close-button" onclick="hideProductManagement()">X</button>
+        </div>
+        <input type="text" id="newProductId" placeholder="ID">
+        <input type="text" id="newProductName" placeholder="Tên sản phẩm">
+        <input type="number" id="newProductPrice" placeholder="Giá sản phẩm">
+        <input type="number" id="newProductQuantity" placeholder="Số lượng">
+        <input type="text" id="newProductDescription" placeholder="Mô tả sản phẩm">
+        <button onclick="addProduct()">Thêm sản phẩm</button>
+    </div>
+    <div id="editProductSection" class="edit-product" style="display: none;">
+        <div class="form-header">
+            <div id="overlay" class="overlay" onclick="hideInvoiceForm()"></div>
+        </div>
+        <input type="text" id="editProductId" placeholder="ID sản phẩm" readonly>
+        <input type="text" id="editProductName" placeholder="Tên sản phẩm">
+        <input type="number" id="editProductPrice" placeholder="Giá sản phẩm">
+        <input type="number" id="editProductQuantity" placeholder="Số lượng">
+        <input type="text" id="editProductDescription" placeholder="Mô tả sản phẩm">
+        <button onclick="saveProductChanges()">Lưu thay đổi</button>
+    </div>
+
+</body>
+
+</html>

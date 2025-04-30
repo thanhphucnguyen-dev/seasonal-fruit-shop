@@ -1,0 +1,366 @@
+/* Nguyễn Thanh Phúc - B2203464 */
+/*------------------------------------------------------------------ Footer Main -------------------------------------------------------------------*/
+/* Của class footer-main */
+.footer-main{
+    padding: 30px 0px;
+    background: #010101;
+}
+.footer-main hr{
+   border-top: 1px solid rgba(255,255,255,.6);
+}
+
+/* Của class footer-top-box */
+.footer-top-box{
+   margin-bottom: 30px;
+}
+/* h3: chỗ giờ làm việc */
+.footer-top-box h3{
+   color: #ffffff;
+   position: relative;
+   font-size: 20px;
+}
+.footer-top-box h3::before {
+   border-bottom: 2px solid #35b466;
+   content: "";
+   height: 3px;
+   width: 50%;
+   position: absolute;
+   bottom: 3px;
+   left: 0px;
+}
+/* Phía dưới của giờ lm việc */
+.list-time{
+   margin-top: 15px;
+}
+.footer-top-box .list-time li{
+   color: #ffffff;
+   font-size: 16px;
+   display: block;
+   float: none;
+}
+
+/* Phía dưới h3: Bản tin */
+.newsletter-box{
+   margin-top: 15px;
+   position: relative;
+}
+.newsletter-box input{
+   height: 40px;
+   border: none;
+   padding: 0 10px;
+   background: transparent;
+   border-radius: 0;
+   background: #fff;
+   padding: 0 20px;
+   width: 100%;
+}
+.newsletter-box i{
+   position: absolute;
+   right: 15px;
+   top: 10px;
+   font-size: 20px;
+}
+.newsletter-box button{	
+   color: #ffffff;
+   font-size: 16px;
+   font-weight: 500;
+   
+}
+
+/* Phía dưới của mạng xã hội */
+.footer-top-box p{
+    padding-bottom: 15px;
+    color: #cccccc;
+}
+
+.footer-top-box ul{
+    display: inline-block;
+}
+.footer-top-box ul li {
+    float: left;
+    margin-right: 5px;
+}
+.footer-top-box ul li a {
+    color: #ffffff;
+    display: inline-block;
+    width: 36px;
+    height: 36px;
+    border: 2px solid #ffffff;
+    text-align: center;
+    line-height: 32px;
+}
+.footer-top-box ul li a:hover {
+    color: #35b466;
+    border-color: #35b450;
+}
+.footer-widget, .footer-link, .footer-link-contact{
+   margin-top: 15px;
+}
+.footer-widget h4 {
+    color: #ffffff;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    position: relative;
+    font-weight: 700;
+}
+.footer-widget h4::before {
+    border-bottom: 3px solid #35b474;
+    content: "";
+    height: 3px;
+    width: 100%;
+    position: absolute;
+    bottom: 3px;
+    left: 0px;
+}
+.footer-widget p {
+    color: #cccccc;
+    font-weight: 400;
+    font-size: 14px;
+    padding-bottom: 20px;
+}
+
+.footer-link{
+}
+.footer-link h4{
+    color: #ffffff;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    position: relative;
+    font-weight: 700;
+}
+.footer-link h4::before {
+    border-bottom: 3px solid #35b474;
+    content: "";
+    height: 3px;
+    width: 100%;
+    position: absolute;
+    bottom: 3px;
+    left: 0px;
+}
+.footer-link ul li {
+    margin-right: 5px;
+}
+.footer-link ul li a {
+    color: #ffffff;
+    text-align: left;
+    display: block;
+    line-height: 32px;
+    position: relative;
+    padding-left: 15px;
+    transition: all .3s ease-in-out;
+    -webkit-transition: all .3s ease-in-out;
+    -moz-transition: all .3s ease-in-out;
+    -o-transition: all .3s ease-in-out;
+    -ms-transition: all .3s ease-in-out;
+}
+.footer-link ul li a::before {
+    font-family: FontAwesome;
+    content: "\f105";
+    position: absolute;
+    left: 5px;
+    line-height: 35px;
+    font-size: 16px;
+    transition: all .3s ease-in-out;
+    -webkit-transition: all .3s ease-in-out;
+    -moz-transition: all .3s ease-in-out;
+    -o-transition: all .3s ease-in-out;
+    -ms-transition: all .3s ease-in-out;
+}
+.footer-link ul li a:hover::before {
+    left: 5px;
+}
+.footer-link ul li a:hover {
+    color: #35b46a;
+    border-color: #35b46a;
+    padding-left: 20px;
+}
+.footer-link-contact h4{
+    color: #ffffff;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    position: relative;
+    font-weight: 700;
+}
+.footer-link-contact h4::before {
+    border-bottom: 3px solid #35b45b;
+    content: "";
+    height: 3px;
+    width: 100%;
+    position: absolute;
+    bottom: 3px;
+    left: 0px;
+}
+.footer-link-contact ul li{
+    margin-bottom: 12px;
+}
+.footer-link-contact ul li i{
+    position: absolute;
+    left: 0;
+    top: 5px;
+    padding-right: 6px;
+}
+.footer-link-contact ul li p{
+    padding-left: 25px;
+    color: #cccccc;
+    position: relative;
+}
+.footer-link-contact ul li p{
+    font-size: 16px;
+    color: #cccccc;
+    font-weight: 300;
+    padding-right: 16px;
+    line-height: 24px;
+}
+.footer-link-contact ul li p a{
+    color: #cccccc;
+}
+.footer-link-contact ul li p a:hover{
+    color: #35b46e;
+}
+/*------------------------------------------------------------------ Copyright -------------------------------------------------------------------*/
+.footer-copyright{
+    background: #060606;
+    padding: 10px 0px;
+    position: relative;
+}
+.footer-copyright p {
+    text-align: center;
+    color: #ffffff;
+    font-size: 16px;
+}
+.footer-copyright p a{
+    color: #ffffff;
+}
+.footer-copyright p a:hover{
+    color: #35b45f;
+}
+
+/*---------------------------------------- Instagram Feed ---------------------------------------------------------*/
+/* Instagram Feed */
+.instagram-box {
+    padding: 40px 0; /* Giảm chiều cao padding */
+    background: url(../images/ins-bg.jpg) no-repeat center center;
+    background-size: cover;
+    position: relative;
+    max-height: 600px; /* Đặt chiều cao tối đa */
+    overflow: hidden; /* Đảm bảo không có phần nào bị tràn */
+}
+
+.instagram-box::before {
+    background: rgba(0, 0, 0, 0.8); /* Giảm opacity */
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0px;
+    content: "";
+    position: absolute;
+    z-index: 0;
+}
+
+.ins-inner-box {
+    position: relative;
+    overflow: hidden;
+}
+
+.ins-inner-box img {
+    width: 100%;
+    height: 200px; /* Đặt chiều cao cố định cho ảnh */
+    object-fit: cover; /* Đảm bảo ảnh không bị méo */
+    transition: transform 0.3s ease;
+}
+
+.ins-inner-box:hover img {
+    transform: scale(1.1);
+}
+
+.hov-in {
+    opacity: 0;
+    background: rgba(211, 59, 51, 0.5);
+    bottom: -100%;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transition: all 0.3s ease-out 0.5s;
+    text-align: center;
+    display: table;
+}
+
+.hov-in a {
+    display: table-cell;
+    vertical-align: middle;
+    height: 100%;
+}
+
+.hov-in i {
+    color: #ffffff;
+    font-size: 36px; /* Giảm kích thước icon */
+    position: relative;
+    z-index: 3;
+}
+
+.hov-in a i:hover {
+    color: #ffffff;
+}
+
+.ins-inner-box:hover .hov-in {
+    bottom: 0;
+    opacity: 1;
+}
+
+/* Carousel Navigation */
+.carousel-control-prev,
+.carousel-control-next {
+    background: #000000;
+    height: 100%;
+    width: 50px;
+    opacity: 0.8;
+    transition: all 0.3s ease;
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+    background: #b0b435;
+}
+
+/* Tự động chuyển động */
+.carousel {
+    animation: slide 3s infinite; /* Tùy chỉnh thời gian chuyển động */
+}
+
+
+/*------------------------------------------------------------------ LOADER -------------------------------------------------------------------*/
+ /* Back to Top Button Styles */
+#back-to-top {
+    position: fixed;
+    bottom: 20px; /* Điều chỉnh khoảng cách từ dưới */
+    right: 20px; /* Điều chỉnh khoảng cách từ phải */
+    font-size: 30px; 
+    line-height: 40px;  /*Căn giữa chữ trong ô vuông*/
+    background-color: #28a745;
+    color: white;
+    border-radius: 10%;
+    width: 50px;
+    height: 50px;
+    display: none; /* Ẩn nút khi không cuộn trang */
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+    z-index: 999; /* Đảm bảo nút không che khuất các phần khác */
+  }
+  
+  #back-to-top:hover {
+    background-color: #218838;
+  }
+  
+  /* Hiển thị nút quay lại khi người dùng cuộn trang xuống */
+  #back-to-top.show {
+    display: block;
+  }
+  

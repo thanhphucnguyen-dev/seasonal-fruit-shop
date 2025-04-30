@@ -1,0 +1,698 @@
+<!-- Nguyễn Lê Huỳnh Đào - B2305564-->
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Site Metas -->
+    <title>Fresh Bounty</title>
+    <meta name="keywords" content="hoa quả, trái cây">
+    <meta name="description" content="">
+    <meta name="author" content="ntPhuc>
+
+    <link rel= "shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+    <!-- customer css -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/sanpham.css">
+    <script src="js/customer.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            let discountApplied = { code: null, rate: 0 }; // Thông tin mã giảm giá
+            let originalTotal = 0; // Tổng tiền gốc trước khi giảm giá
+        
+            // Hiển thị giỏ hàng khi trang tải xong
+            updateCartDisplay();
+        
+            // Hàm tính tổng tiền giỏ hàng
+            function calculateCartTotal() {
+                let total = 0;
+                cart.forEach(item => {
+                    total += item.price * item.quantity;
+                });
+                originalTotal = total; // Lưu tổng tiền gốc vào biến
+                return total;
+            }
+        
+            // Cập nhật giỏ hàng và hiển thị các sản phẩm
+            function updateCartDisplay() {
+                const cartItemsContainer = document.getElementById('cart-items');
+                if (!cartItemsContainer) return;
+        
+                let total = calculateCartTotal(); // Tính tổng tiền giỏ hàng
+                cartItemsContainer.innerHTML = ''; // Xóa nội dung giỏ hàng hiện tại
+        
+                // Hiển thị từng sản phẩm trong giỏ hàng
+                cart.forEach(item => {
+                    const cartRow = document.createElement('div');
+                    cartRow.className = 'cart-row';
+                    cartRow.innerHTML = `
+                        <img src="${item.image}" alt="${item.name}" class="cart-image" style="width: 50px; height: 50px; margin-right: 10px;">
+                        <span>${item.name}</span>
+                        <span>${item.price} VND x ${item.quantity}</span>
+                        <div class="quantity-controls">
+                            <button onclick="decreaseQuantity('${item.id}')">-</button>
+                            <span>${item.quantity}</span>
+                            <button onclick="increaseQuantity('${item.id}')">+</button>
+                        </div>
+                        <button onclick="removeFromCart('${item.id}')" class="remove-item">Xóa</button>
+                    `;
+                    cartItemsContainer.appendChild(cartRow);
+                });
+        
+                // Hiển thị tổng tiền giỏ hàng
+                document.getElementById('cart-total-price').innerText = `${originalTotal} VND`;
+        
+                // Hiển thị số tiền giảm
+                updateDiscountAmount();
+        
+                // Đề xuất mã giảm giá tự động
+                suggestDiscountCode(originalTotal);
+            }
+        
+            // Hàm cập nhật số tiền giảm
+            function updateDiscountAmount() {
+                const discountAmount = originalTotal * discountApplied.rate;
+                document.getElementById('discount-amount').innerText = `${discountAmount.toFixed(0)} VND`;
+            }
+        
+            // Đề xuất mã giảm giá tự động nếu tổng tiền đạt ngưỡng
+            function suggestDiscountCode(total) {
+                const discountDisplay = document.getElementById('discount-feedback');
+        
+                // Danh sách mã giảm giá
+                const discountConditions = [
+                    { code: "SALE20K", threshold: 20000, discountRate: 0.10 },
+                    { code: "SALE40K", threshold: 40000, discountRate: 0.15 },
+                    { code: "SALE60K", threshold: 60000, discountRate: 0.20 },
+                    { code: "SALE80K", threshold: 80000, discountRate: 0.25 }
+                ];
+        
+                // Tìm mã giảm giá cao nhất có thể áp dụng
+                const bestDiscount = discountConditions
+                    .filter(condition => total >= condition.threshold) // Chọn mã giảm giá hợp lệ
+                    .sort((a, b) => b.threshold - a.threshold)[0]; // Chọn mã giảm giá có mức giảm cao nhất
+        
+                // Hiển thị mã giảm giá nếu có
+                if (bestDiscount) {
+                    discountDisplay.innerText = `Mã giảm giá: ${bestDiscount.code}`;
+                    discountApplied.code = bestDiscount.code;
+                    discountApplied.rate = bestDiscount.discountRate;
+                } else {
+                    discountDisplay.innerText = "Không có mã giảm giá";
+                    discountApplied = { code: null, rate: 0 };
+                }
+            }
+        
+            // Hàm lấy mã giảm giá tự động
+            window.getSuggestedDiscountCode = function() {
+                const total = calculateCartTotal();
+                suggestDiscountCode(total);
+                document.getElementById('discount-input').value = discountApplied.code || '';
+            };
+        
+            // Hàm áp dụng mã giảm giá từ ô nhập
+            window.applySavedDiscountCode = function() {
+                const discountCode = document.getElementById('discount-input').value.trim();
+        
+                if (discountCode && discountCode === discountApplied.code) {
+                    const discountAmount = originalTotal * discountApplied.rate;
+                    const discountedTotal = originalTotal - discountAmount;
+                    document.getElementById('cart-total-price').innerText = `${discountedTotal.toFixed(0)} VND`;
+        
+                    // Cập nhật số tiền giảm
+                    updateDiscountAmount();
+                    document.getElementById('discount-feedback').innerText = 'Mã giảm giá áp dụng thành công!';
+                } else {
+                    document.getElementById('discount-feedback').innerText = 'Mã giảm giá không hợp lệ!';
+                }
+            };
+        
+            // Hàm hủy mã giảm giá
+            window.cancelDiscountCode = function() {
+                document.getElementById('cart-total-price').innerText = `${originalTotal} VND`;
+                document.getElementById('discount-amount').innerText = `0 VND`;
+                document.getElementById('discount-feedback').innerText = ''; // Xóa thông báo lỗi
+            };
+        
+            // Hàm tăng số lượng sản phẩm
+            window.increaseQuantity = function(productId) {
+                const itemInCart = cart.find(item => item.id === productId);
+                if (itemInCart) {
+                    itemInCart.quantity++;
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    updateCartDisplay();
+                }
+            };
+        
+            // Hàm giảm số lượng sản phẩm
+            window.decreaseQuantity = function(productId) {
+                const itemInCart = cart.find(item => item.id === productId);
+                if (itemInCart && itemInCart.quantity > 1) {
+                    itemInCart.quantity--;
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    updateCartDisplay();
+                } else if (itemInCart) {
+                    removeFromCart(productId);
+                }
+            };
+        
+            // Hàm xóa sản phẩm khỏi giỏ hàng
+            window.removeFromCart = function(productId) {
+                cart = cart.filter(item => item.id !== productId);
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCartDisplay();
+            };
+        
+            // Cập nhật giỏ hàng khi trang tải
+            updateCartDisplay();
+        });
+            </script>
+</head>
+<div>
+    <!-- Start Main Top -->
+    <div class="main-top">
+        <div class="container-fluid pt-2">
+            <div class="row">
+                <!-- Phần trái -->
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <!-- Dropdown Chọn Loại Tiền -->
+                    <div class="dropdown mb-3">
+                        <button class="btn btn-outline-primary dropdown-toggle" type="button" id="currencyDropdown"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            VND
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="currencyDropdown">
+                            <li><a class="dropdown-item" href="#">VND</a></li>
+                            <li><a class="dropdown-item" href="#">¥ JPY</a></li>
+                            <li><a class="dropdown-item" href="#">$ USD</a></li>
+                            <li><a class="dropdown-item" href="#">€ EUR</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Our Link -->
+                    <div class="our-link mb-3">
+                        <ul class="list-unstyled">
+                            <li><a href="#"><i class="fas fa-location-arrow"></i> Địa chỉ của chúng tôi</a></li>
+                            <li><a href="lienhe.html"><i class="fas fa-headset"></i> Liên hệ</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Phần giữa (Carousel) -->
+                <div class="col-lg-4 col-md-6 col-sm-12 text-center">
+                    <div class="text-slid-box">
+                        <div id="offer-box" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                            <!-- Các item trong carousel -->
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <i class="fab fa-opencart"></i> Trái cây mùa thu giá tốt – Giảm ngay 20% cho đơn đầu
+                                    tiên!
+                                </div>
+                                <div class="carousel-item">
+                                    <i class="fab fa-opencart"></i> Tươi từ vườn, sạch từ gốc – Hương vị mùa màng đích
+                                    thực!
+                                </div>
+                                <div class="carousel-item">
+                                    <i class="fab fa-opencart"></i> Xoài cát Hòa Lộc – Đậm đà hương vị quê nhà, thử ngay
+                                    hôm nay!
+                                </div>
+                                <div class="carousel-item">
+                                    <i class="fab fa-opencart"></i> Trái ngọt bốn mùa, gắn kết yêu thương gia đình!
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phần phải -->
+                <div class="col-lg-4 col-md-8 col-sm-12 text-end">
+                    <!-- Dropdown Đăng Nhập -->
+                    <div class="dropdown mb-3">
+                        <button class="btn btn-outline-primary dropdown-toggle" type="button" id="currencyDropdown"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Chọn
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="authDropdown">
+                            <li><a class="dropdown-item" href="dangnhap.html">Đăng nhập</a></li>
+                            <li><a class="dropdown-item" href="dangky.html">Đăng ký</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="our-link">
+                        <ul class="list-unstyled d-flex gap-3 justify-content-end">
+                            <li><a href="#"><i class="fab fa-opencart text-primary"></i> Ưu đãi</a></li>
+                            <li><a href="#"><i class="fas fa-gift text-primary"></i> Mã giảm giá</a></li>
+                            <li><a href="taikhoan.html"><i class="fa fa-user s_color"></i> Tài khoản của tôi</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Main Top -->
+
+    <!-- Main Header -->
+    <header class="main-header sticky-header">
+        <!-- Start Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-center">
+            <div class="container d-flex justify-content-between align-items-center">
+                <!-- Start Header Navigation -->
+                <a class="navbar-brand" href="trangchu.html">
+                    <img src="images/logo.png" class="logo" alt="logo" width="70px" height="auto">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu"
+                    aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <!-- End Header Navigation -->
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <!-- Menu chính -->
+                <div class="collapse navbar-collapse justify-content-center" id="navbar-menu">
+                    <ul class="navbar-nav">
+                        <li class="nav-item active"><a class="nav-link" href="trangchu.html">Trang chủ</a></li>
+                        <li class="nav-item"><a class="nav-link" href="veChungToi.html">Về Chúng Tôi</a></li>
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Cửa hàng</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="sanpham.html">Sản Phẩm</a></li>
+                                <li><a class="dropdown-item" href="shop-detail.html">Chi Tiết Sản Phẩm</a></li>
+                                <li><a class="dropdown-item" href="xemgiohang.html">Giỏ Hàng</a></li>
+                                <li><a class="dropdown-item" href="thanhtoan.html">Thanh Toán</a></li>
+                                <li><a class="dropdown-item" href="taikhoan.html">Tài Khoản Của Tôi</a></li>
+                                <li><a class="dropdown-item" href="wishlist.html">Sản Phẩm Yêu Thích</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item"><a class="nav-link" href="dangky.html">Đăng ký</a></li>
+                        <li class="nav-item"><a class="nav-link" href="lienhe.html">Liên Hệ</a></li>
+                    </ul>
+                </div>
+
+                <!-- Các biểu tượng bên phải -->
+                <div class="d-flex align-items-center mt-2">
+                    <!-- Search Icon -->
+                    <a class="nav-link" id="icon-search-btn"><i class="fa fa-search"></i></a>
+                    <!-- Search Container -->
+                    <form onsubmit="searchProducts(event)" method="GET" class="search-container" id="search-container">
+                        <div class="search-box">
+                            <input type="text" name="query" id="search-input" placeholder="Tìm Kiếm Sản Phẩm..." required>
+                            <!-- <button type="submit">Search</button> -->
+                            <button type="button" class="close-btn" id="close-btn">&times;</button>
+                        </div>
+                    </form>
+
+                    <!-- Giỏ Hàng -->
+                    <button class="nav-link position-relative me-3" id="cart-link" onclick="toggleCart()">
+                        <i class="fa fa-shopping-bag"></i>
+                        <span id="cart-count" class="badge bg-danger position-absolute top-0 start-100 translate-middle">0</span>
+                    </button>
+
+                    <!-- Popup Giỏ Hàng -->
+                    <div id="cart" class="cart-popup">
+                        <div class="cart-header">
+                            <div class="cart-title">
+                                <h4>Giỏ Hàng</h4>
+                                <button onclick="closeCart()" class="close-btn">&times;</button>
+                            </div>
+                        </div>
+                        <div id="cart-items" class="cart-items">
+                            <!-- Các sản phẩm được thêm bằng js -->
+                        </div>
+                        <div class="cart-footer">
+                            <span id="cart-total-price">0 VND</span>
+                            <button id="checkout-interview" onclick="checkinterview()"><a href="thanhtoan.html">Thanh toán</a></button>
+                            <button id="checkout-button" onclick="checkout()" disabled><a href="xemgiohang.html">Xem giỏ hàng</a></button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </nav>
+        <!-- End Navigation -->
+    </header>
+
+    <!-- Start All Title Box -->
+    <div class="all-title-box py-5 bg-light">
+        <div class="container-fluid">
+        <div class="row align-items-center">
+            <!-- Tiêu đề và breadcrumb -->
+            <div class="col-lg-5">
+            <h2 class="mb-5">Fresh Bounty</h2>
+            </div>
+            <div class="col-lg-5"> <!-- Breadcrumb lệch phải -->
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="trangchu.html">Trang chủ</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="thanhtoan.html">Thanh toán</a></li>
+                </ol>
+            </nav>
+            </div>
+        </div>
+        </div>
+    </div>
+    <!-- End All Title Box -->
+    
+     <!--Form thanh toán-->
+     <div class="container mt-5">
+        <div class="row">
+            <!-- Phần thông tin thanh toán -->
+            <div class="col-md-6">
+                <div class="form-section">
+                    <h2><b>THÔNG TIN THANH TOÁN</b></h2><br>
+                    <form onsubmit="checkout">
+                        <div>
+                            <label for="name"><b>Họ và tên *</b></label>
+                            <input type="text" id="name" placeholder="Họ tên của bạn">
+                        </div>
+                        <div>
+                            <label for="email"><b>Địa chỉ email *</b></label>
+                            <input type="email" id="email" placeholder="Email của bạn">
+                        </div>
+                        <div>
+                            <label for="phone"><b>Số điện thoại *</b></label>
+                            <input type="text" id="phone" placeholder="Số điện thoại của bạn">
+                        </div>
+                        <div>
+                            <label for="city"><b>Tỉnh/Thành phố *</b></label>
+                            <input type="text" id="city" value="Cần Thơ">
+                        </div>
+                        <div>
+                            <label for="district"><b>Quận/Huyện *</b></label>
+                            <select id="district">
+                                <option>Chọn quận huyện</option>
+                                <option>Ninh Kiều</option>
+                                <option>Cái Răng</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="ward">,<b>Xã/Phường *</b></label>
+                            <select id="ward">
+                                <option>Chọn xã/phường</option>
+                                <option>Cái Khế</option>
+                                <option>Hưng Phú</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="address"><b>Địa chỉ *</b></label>
+                            <input type="text" id="address" placeholder="Ví dụ: Số 20, ngõ 90">
+                        </div>
+                        <div class="checkbox-label">
+                            <label for="different-address"><b>Giao hàng tới địa chỉ khác?</b></label>
+                            <input type="checkbox" id="different-address">
+                        </div>
+                        <div>
+                            <label for="order-notes"><b>Ghi chú đơn hàng (tùy chọn)</b></label>
+                            <textarea id="order-notes" rows="5" placeholder="Ghi chú về đơn hàng, ví dụ: thời gian hay chỉ dẫn địa điểm giao hàng chi tiết hơn."></textarea>
+                        </div>
+                    </form>
+                </div>
+            </div>
+    
+            <div class="col-md-6">
+                <div class="cart-container">
+                    <h2><b>ĐƠN HÀNG CỦA BẠN</b></h2><br>
+                    <!-- Phần sản phẩm trong giỏ hàng -->
+                    <div class="cart-details">
+                        <!-- Thể hiện các sản phẩm trong giỏ hàng -->
+                        <div id="cart-items" class="cart-items"></div>
+
+                    
+                        <!-- Số tiền giảm hiển thị ngay trên tổng cộng -->
+                        <div class="discount-amount">
+                            <strong>Số tiền giảm:</strong>
+                            <span id="discount-amount">0 VND</span>
+                        </div>
+                    
+                        <!-- Tổng cộng giỏ hàng -->
+                        <div class="cart-total">
+                            <strong>Tổng Cộng:</strong>
+                            <span id="cart-total-price">0 VND</span>
+                        </div>
+                    </div>
+
+                    <!-- Phương thức thanh toán -->
+                    <div class="payment-method">
+                        <div>
+                            <input type="radio" id="cod" name="payment" checked>
+                            <label for="cod"><b>Trả tiền mặt khi nhận hàng</b></label>
+                            <p>Trả tiền mặt sau khi nhận hàng tại nhà. Thanh toán COD.</p>
+                        </div>
+                        <div>
+                            <input type="radio" id="bank-transfer" name="payment">
+                            <label for="bank-transfer"><b>Chuyển khoản ngân hàng</b></label>
+                        </div>
+                    </div><br>
+    
+                    <!-- Phần thanh toán và mã giảm giá -->
+                    <div class="checkout-section">
+                        <div class="discount-code">
+                            <label for="discount-input">Phiếu Giảm Giá</label>
+                            <input type="text" id="discount-input" placeholder="Nhập mã giảm giá">
+                    
+                            <!-- Các nút thao tác với mã giảm giá -->
+                            <div class="discount-buttons">
+                                <button onclick="getSuggestedDiscountCode()">Lấy Mã</button>
+                                <button onclick="applySavedDiscountCode()">Áp Dụng Mã</button>
+                                <button onclick="cancelDiscountCode()">Không áp dụng giảm giá</button>
+                            </div>
+                    
+                            <!-- Hiển thị thông báo cho mã giảm giá -->
+                            <span id="discount-feedback" class="feedback"></span>
+                        </div>
+                    </div><br>
+                    <a href="giohang.html"><button onclick="checkout()" class="checkout-button">TRỞ LẠI TRANG TRƯỚC</button></a>
+                    <a href="thanhtoanthanhcong.html"><button onclick="checkout(event)" class="checkout-button">THANH TOÁN</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<!-- Biểu tượng chat -->
+<div id="chatbox" style="display: none;">
+    <div id="chatbox-header">
+        Hỗ trợ trực tuyến
+        <button id="close-btn" onclick="closeChatbox()">×</button> <!-- Nút đóng -->
+    </div>
+    <div id="chatbox-body">
+        <div id="chat-log"></div>
+    </div>
+    <div id="chat-input-container">
+        <input type="text" id="user-input" placeholder="Nhập tin nhắn..." onkeydown="checkEnter(event)">
+        <button id="send-btn" onclick="sendMessage()">Gửi</button>
+    </div>
+</div>
+<div id="chat-icon" onclick="toggleChat()" class="fas fa-comments"></div>
+
+<!-- End chat box -->
+
+<!-- Start Instagram Feed -->
+<div class="instagram-box container-fluid">
+    <div id="instagramCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+        <!-- Auto slide every 3 seconds -->
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="d-flex">
+                    <div class="ins-inner-box flex-fill p-2">
+                        <img src="images/instagram-img-01.jpg" class="d-block w-100 img-fluid"
+                            alt="Instagram Image 1" style="height: 200px;">
+                        <div class="hov-in">
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                    <div class="ins-inner-box flex-fill p-2">
+                        <img src="images/instagram-img-02.jpg" class="d-block w-100 img-fluid"
+                            alt="Instagram Image 2" style="height: 200px;">
+                        <div class="hov-in">
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                    <div class="ins-inner-box flex-fill p-2">
+                        <img src="images/instagram-img-03.jpg" class="d-block w-100 img-fluid"
+                            alt="Instagram Image 3" style="height: 200px;">
+                        <div class="hov-in">
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                    <div class="ins-inner-box flex-fill p-2">
+                        <img src="images/instagram-img-04.jpg" class="d-block w-100 img-fluid"
+                            alt="Instagram Image 4" style="height: 200px;">
+                        <div class="hov-in">
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="d-flex">
+                    <div class="ins-inner-box flex-fill p-2">
+                        <img src="images/instagram-img-05.jpg" class="d-block w-100 img-fluid"
+                            alt="Instagram Image 5" style="height: 200px;">
+                        <div class="hov-in">
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                    <div class="ins-inner-box flex-fill p-2">
+                        <img src="images/instagram-img-06.jpg" class="d-block w-100 img-fluid"
+                            alt="Instagram Image 6" style="height: 200px;">
+                        <div class="hov-in">
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                    <div class="ins-inner-box flex-fill p-2">
+                        <img src="images/instagram-img-07.jpg" class="d-block w-100 img-fluid"
+                            alt="Instagram Image 7" style="height: 200px;">
+                        <div class="hov-in">
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                    <div class="ins-inner-box flex-fill p-2">
+                        <img src="images/instagram-img-08.jpg" class="d-block w-100 img-fluid"
+                            alt="Instagram Image 8" style="height: 200px;">
+                        <div class="hov-in">
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Carousel Navigation -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#instagramCarousel"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#instagramCarousel"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</div>
+<!-- End Instagram Feed -->
+
+<!-- Start Footer  -->
+<footer>
+    <div class="footer-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="footer-top-box">
+                        <h3>Giờ làm việc</h3>
+                        <ul class="list-time">
+                            <li>Thứ hai - Thứ sáu: 08.00am to 05.00pm</li>
+                            <li>Thứ bảy: 10.00am to 08.00pm</li>
+                            <li>Chủ Nhật: <span>Closed</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="footer-top-box">
+                        <h3>Bản tin</h3>
+                        <form class="newsletter-box">
+                            <div class="form-group">
+                                <input class="" type="email" name="Email" placeholder="Email Address*" />
+                                <i class="fa fa-envelope"></i>
+                            </div>
+                            <button class="btn hvr-hover" type="submit">Submit</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="footer-top-box">
+                        <h3>Mạng xã hội</h3>
+                        <p>Tìm kiếm trái cây tươi ngon theo mùa? Hãy theo dõi chúng tôi trên mạng xã hội để cập nhật
+                            những sản phẩm mới nhất và các ưu đãi hấp dẫn!</p>
+                        <ul>
+                            <li><a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>
+                            <li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
+                            <li><a href="#"><i class="fab fa-linkedin" aria-hidden="true"></i></a></li>
+                            <li><a href="#"><i class="fab fa-google-plus" aria-hidden="true"></i></a></li>
+                            <li><a href="#"><i class="fa fa-rss" aria-hidden="true"></i></a></li>
+                            <li><a href="#"><i class="fab fa-pinterest-p" aria-hidden="true"></i></a></li>
+                            <li><a href="#"><i class="fab fa-whatsapp" aria-hidden="true"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="footer-widget">
+                        <h4>Về Fresh Bounty</h4>
+                        <p>Fresh Bounty là cửa hàng chuyên cung cấp trái cây tươi ngon theo mùa. Chúng tôi cam kết
+                            mang đến cho khách hàng những sản phẩm chất lượng cao, được thu hoạch từ những vườn cây
+                            trái tốt nhất.</p>
+                        <p>Tại Fresh Bounty, bạn sẽ tìm thấy đa dạng các loại trái cây theo mùa, từ xoài, dưa hấu
+                            đến cam, chuối. Hãy đến với chúng tôi để trải nghiệm hương vị tươi mới và tự nhiên trong
+                            từng sản phẩm! </p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="footer-link">
+                        <h4>Thông tin</h4>
+                        <ul>
+                            <li><a href="#">Về chúng tôi</a></li>
+                            <li><a href="#">Dịch vụ khách hàng</a></li>
+                            <li><a href="#">Sơ đồ trang web</a></li>
+                            <li><a href="#">Điều khoản &amp; Điều kiện</a></li>
+                            <li><a href="#">Chính sách bảo mật</a></li>
+                            <li><a href="#">Thông tin giao hàng</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="footer-link-contact">
+                        <h4>Liên hệ chúng tôi</h4>
+                        <ul>
+                            <li>
+                                <p><i class="fas fa-map-marker-alt"></i>Address: 1 Gwanak-ro 08826<br>Gwanak-gu,
+                                    Seoul <br> Hàn Quốc</p>
+                            </li>
+                            <li>
+                                <p><i class="fas fa-phone-square"></i>Phone: <a
+                                        href="tel:+84-783705378">+84-783705378</a></p>
+                            </li>
+                            <li>
+                                <p><i class="fas fa-envelope"></i>Email: <a
+                                        href="roboTraiCay05@gmail.com">roboTraiCay05@gmail.com</a></p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- End Footer  -->
+
+    <!-- Start copyright  -->
+    <div class="footer-copyright">
+        <p class="footer-company">All Rights Reserved. &copy; 2024 <a href="#">ntPhuc</a> Design By :
+            <a href="https://html.ntPhuc/">ntPhuc</a>
+        </p>
+    </div>
+    <!-- End copyright  -->
+    <!-- Back to Top Button -->
+    <a href="trangchu.html" id="back-to-top" title="Back to top">&uarr;</a>
+
+    <!-- ALL JS FILES -->
+    <!-- <script src="js/bootstrap.bundle.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</html>

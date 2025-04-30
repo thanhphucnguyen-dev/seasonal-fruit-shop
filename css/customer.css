@@ -1,0 +1,357 @@
+/* Nguyễn Thanh Phúc B2203464 */
+/* ---------------------------Container chính ------------------*/
+.form-input {
+    padding: 2rem 1rem;
+    background-color: #f3f4f6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.8s ease-in-out;
+    height: 300px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-input h1 {
+    font-size: 2rem;
+    color: #333;
+    text-align: center;
+    font-weight: 700;
+    margin-bottom: 2rem;
+}
+
+/* Input Style với hiệu ứng trượt */
+.input-style {
+    width: 100%;
+    margin-bottom: 1rem;
+    padding: 0.75rem 1rem;
+    border: none;
+    border-bottom: 2px solid #ccc;
+    border-radius: 4px 4px 0 0;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+}
+
+.input-style:focus {
+    border-bottom-color: #007bff;
+    box-shadow: 0px 8px 16px rgba(0, 123, 255, 0.2);
+    outline: none;
+    animation: slideIn 0.4s ease forwards;
+}
+
+@keyframes slideIn {
+    0% {
+        border-bottom-width: 0;
+    }
+    100% {
+        border-bottom-width: 2px;
+    }
+}
+
+/* Nút đăng ký với hiệu ứng bật sáng */
+.next {
+    background-color: #007bff;
+    color: #fff;
+    padding: 0.75rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.next:hover {
+    background-color: #0056b3;
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
+}
+
+.next::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: left 0.4s ease;
+}
+
+.next:hover::after {
+    left: 100%;
+}
+
+/* Phản hồi lỗi với hiệu ứng fade-in */
+.invalid-feedback.error {
+    color: #d9534f;
+    font-size: 0.875rem;
+    margin-top: -0.5rem;
+    margin-bottom: 0.75rem;
+    animation: fadeInError 0.5s ease;
+}
+
+@keyframes fadeInError {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Đường dẫn shortcut */
+.shortcut {
+    display: block;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #666;
+    margin-top: 1.5rem;
+}
+
+.shortcut a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.shortcut a:hover {
+    text-decoration: underline;
+    color: #0056b3;
+}
+
+/* Hiệu ứng chuyển động tổng thể cho trang */
+@media (max-width: 576px) {
+    .form-input {
+        padding: 1.5rem 1rem;
+    }
+
+    .input-style, .next {
+        font-size: 1rem;
+        padding: 0.5rem 0.75rem;
+    }
+
+    .form-input h1 {
+        font-size: 1.5rem;
+    }
+}
+/* ------------------------------ */
+/* Định dạng tổng quan cho form đăng nhập, đăng ký */
+.login-form {
+    background-color: #f0fdf4; /* Nền xanh nhạt */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* border: 2px solid #007bff; */
+    flex-direction: column; /* Căn theo cột để hợp lý hơn */
+    padding: 2rem 0;
+    border-radius: 10px; /* Thêm bo góc cho form */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Tạo hiệu ứng nổi */
+    /* margin-top: 150px; */
+}
+
+/* Chỉ viền bao quanh form */
+.login-form form {
+    border: 2px solid #007bff; /* Viền màu xanh */
+    border-radius: 15px; /* Bo góc */
+    padding: 20px; /* Khoảng cách bên trong */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng */
+    background-color: #ffffff; /* Màu nền trắng */
+    /* max-width:550px; */
+}
+
+
+/* Tiêu đề form */
+.form-title {
+    font-size: 2rem;
+    color: #4caf50; /* Màu xanh lá */
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.form-title::after {
+    content: "";
+    width: 60px;
+    height: 4px;
+    background-color: #4caf50;
+    display: block;
+    margin: 8px auto 0;
+    border-radius: 2px;
+}
+
+/* Căn chỉnh input-group */
+.input-group {
+    display: flex;
+    /* align-items: center; Căn giữa nội dung theo chiều dọc */
+    margin-bottom: 1rem;
+    width: 100%;
+}
+
+/* Icon bên trái input */
+.input-group-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem; /* Điều chỉnh khoảng cách */
+    background-color: #e9ecef;
+    border: 1px solid #ced4da;
+    border-right: none;
+    border-radius: 0.375rem 0 0 0.375rem;
+}
+
+
+
+/* Icon */
+.input-group-text i {
+    font-size: 18px; /* Tăng kích thước icon một chút */
+    color: #495057;
+}
+
+/* Input */
+.input-style {
+    flex: 1;
+    padding: 0.75rem; /* Tăng padding để dễ nhìn hơn */
+    border: 1px solid #ced4da;
+    border-left: none;
+    border-radius: 0 0.375rem 0.375rem 0;
+    font-size: 1rem;
+    transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+/* Hiệu ứng khi focus */
+.input-style:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 6px rgba(0, 123, 255, 0.3);
+}
+
+/* Nút đăng nhập */
+.login-button {
+    background-color: #4caf50;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-button:hover {
+    background-color: #43da4b;
+    box-shadow: 0 4px 12px rgba(56, 142, 60, 0.4);
+}
+
+/* Feedback lỗi */
+.invalid-feedback {
+    color: #d9534f;
+    font-size: 0.875rem;
+    margin-top: -0.5rem;
+    margin-left: 0.5rem;
+    transition: color 0.3s ease-in-out;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    .login-form {
+        padding: 1.5rem 1rem;
+    }
+    .form-title {
+        font-size: 1.5rem;
+    }
+    .input-style, .login-button {
+        font-size: 1rem;
+        padding: 0.6rem 0.75rem;
+    }
+    .custom-captcha-icon {
+        height: 50px;
+        width: 50px; /* Giảm kích thước trên thiết bị nhỏ */
+    }
+}
+
+/* Các biểu tượng đăng nhập khác */
+/* Đặt các nút nằm trên cùng một hàng */
+.social-login-buttons {
+    display: flex;
+    justify-content: center;  /* Căn đều khoảng cách */
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* Kiểu cho các nút đăng nhập */
+.social-login-buttons .btn {
+    width: 60px;  /* Chiều rộng của ô vuông */
+    height: 60px; /* Chiều cao của ô vuông */
+    border-radius: 30px; /* Bo góc nhẹ để tạo các góc vuông */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    border: none;
+    font-size: 24px; /* Kích thước biểu tượng */
+}
+
+/* Màu sắc cho các nút */
+.btn-google {
+    background-color: #db4437;
+    color: white;
+}
+
+.btn-facebook {
+    background-color: #3b5998;
+    color: white;
+}
+
+.btn-phone {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.btn-twitter {
+    background-color: #1DA1F2;
+    color: white;
+}
+
+/* Hiệu ứng hover */
+.btn-google:hover {
+    background-color: #c1351d;
+}
+
+.btn-facebook:hover {
+    background-color: #2d4373;
+}
+
+.btn-phone:hover {
+    background-color: #388E3C;
+}
+
+.btn-twitter:hover {
+    background-color: #1A91DA;
+}
+
+/* Biểu tượng */
+.btn i {
+    font-size: 30px; /* Điều chỉnh kích thước biểu tượng */
+}
+/* Hiệu ứng hover */
+.btn:hover {
+    opacity: 0.9;
+}
+
